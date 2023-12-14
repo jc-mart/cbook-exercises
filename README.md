@@ -1,0 +1,1 @@
+This is a repo where I'll be tracking my progrss going through the C book.
