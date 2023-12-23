@@ -114,6 +114,41 @@ void verticalHistogram() {
     }
 }
 
+
+/**
+ * Exercise 1-14. Write a program to print a histogram of the frequencies of
+ * different characters in its input.
+*/
+
+#define CHAR_BUF 95 // All keys that may be pressed by keyboard
+#define CHAR_BEGIN 32 // Keyboard characters begin, starting at space
+#define HIST_LIMIT 20
+
+void charFrequency() {
+    int c, i, cc;
+    float r;
+    int cl[CHAR_BUF];
+    char ci;
+
+    for (i = 0; i < CHAR_BUF; ++i)
+        cl[i] = 0;
+
+    cc = 0;
+    while ((c = getchar()) != EOF) {
+        ++cl[c - CHAR_BEGIN];
+        ++cc;
+
+        //putchar(c);
+        for (i = 0; i < CHAR_BUF; ++i) {
+            if (cl[i] != 0) {
+                ci = i + CHAR_BEGIN;
+                r = cl[i] / cc * HIST_LIMIT;
+                // Print out frequencies
+            }
+        }
+    }
+}
+    
 int main() {
     verticalHistogram();
 }
