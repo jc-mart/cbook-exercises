@@ -122,10 +122,10 @@ void verticalHistogram() {
 
 #define CHAR_BUF 95 // All keys that may be pressed by keyboard
 #define CHAR_BEGIN 32 // Keyboard characters begin, starting at space
-#define HIST_LIMIT 20
+#define HIST_LIMIT 50
 
 void charFrequency() {
-    int c, i, cc;
+    int c, i, j, cc;
     float r;
     int cl[CHAR_BUF];
     char ci;
@@ -135,20 +135,26 @@ void charFrequency() {
 
     cc = 0;
     while ((c = getchar()) != EOF) {
-        ++cl[c - CHAR_BEGIN];
-        ++cc;
+        if (c != '\t' && c != '\n') {
+            ++cl[c - CHAR_BEGIN];
+            ++cc;
+        }
 
         //putchar(c);
         for (i = 0; i < CHAR_BUF; ++i) {
             if (cl[i] != 0) {
                 ci = i + CHAR_BEGIN;
-                r = cl[i] / cc * HIST_LIMIT;
-                // Print out frequencies
+                r = ((float)cl[i] / cc) * HIST_LIMIT;
+                printf("'%c':", ci);
+                for (j = 0; j < r; ++j)
+                    printf("-");
+                printf("\n");
             }
         }
+        printf("\n");
     }
 }
     
 int main() {
-    verticalHistogram();
+    charFrequency();
 }
