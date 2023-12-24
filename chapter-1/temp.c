@@ -54,10 +54,20 @@ void fahrToCelsiusDesc() {
     }
 }
 
+/**
+ * Exercise 1-15. Rewrite the temperature conversion program of Section 1.2 to
+ * use a function for conversion.
+*/
+
+float fahrToCelsius2(int fahr) {
+    return (5.0 / 9.0) * (fahr - 32.0);
+}
+
 int main() {
     fahrToCelsius();
     printf("\n");
     celsiusToFahr();
     printf("\n");
     fahrToCelsiusDesc();
+    printf("\n%f\n", fahrToCelsius2(212));
 }
