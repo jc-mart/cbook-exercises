@@ -1,5 +1,5 @@
 #include <stdio.h>
-#define MAXLINE 10000 // Maximum input line size
+#define MAXLINE 1000 // Maximum input line size
 
 int getline(char line[]);
 void copy(char to[], char from[]);
@@ -40,6 +40,9 @@ int getline(char s[]) { // Removed limit, prints long lengths.
     int c, i;
 
     // Removed limits here as well
+    // TODO: Revisit this. Will encounter errors printing out longest line
+    // Find a way to keep counter accurate, don't worry about printing all
+    // the output
     for (i = 0; (c = getchar()) != EOF && c != '\n'; ++i)
         s[i] = c;
     if (c == '\n') {
@@ -88,9 +91,8 @@ void printLong80() {
 */
 
 void removeTrailing() {
-    int c, i;
+    int c, i, letter;
     char line[MAXLINE];
-    int letter;
 
     while ((c = getchar()) != EOF) {
         for (i = 0; c != '\n'; ++i) {
@@ -123,7 +125,6 @@ void reverse(char s[]) {
 
     for (i = 0; s[i] != '\0'; ++i)
         ;
-
     for (i; i >= 0; --i)
         putchar(s[i]);
     printf("\n");

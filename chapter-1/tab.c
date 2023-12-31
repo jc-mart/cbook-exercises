@@ -47,9 +47,9 @@ void entab(int col) {
                 ++i;
             // Tabs are given precedence over blanks
             for (i; i >= DEFAULT; i -= DEFAULT)
-                putchar('\t');
+                putchar('-'); // To visualize tabs
             for (i; i > 0; --i)
-                putchar(' ');
+                putchar('.'); // To visualize spaces
         }
         putchar(c);
     }

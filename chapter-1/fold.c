@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-#define DEFAULT 10
+#define DEFAULT 20
 
 /**
  * Exercise 1-22. Write a program to "fold" long input lines into two or more
@@ -13,9 +13,30 @@
 void fold(int n);
 
 int main() {
-
+    fold(DEFAULT);
 }
 
 void fold(int n) {
+    int c, i, letter;
+    char line[DEFAULT];
 
+    while ((c = getchar()) != EOF) {
+        // DEFAULT - 1 to have room for null terminator
+        for (i = 0; i < DEFAULT - 1 || c == '\n'; ++i) {
+            line[i] = c;
+            c = getchar();
+        }
+        line[i] = '\0';
+        letter = 0;
+        for (i; i >= 0; --i) {
+            if (line[i] != ' ' || line[i] != '\t')
+                letter = 1;
+            if ((line[i] == ' ' && letter == 0) || (line[i] == '\t' &&
+            letter == 0))
+                line[i] = '\0';
+        }
+        for (i = 0; line[i] != '\0'; ++i)
+            putchar(line[i]);
+        printf("\n");
+    }
 }
