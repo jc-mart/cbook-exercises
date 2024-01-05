@@ -17,26 +17,28 @@ int main() {
 }
 
 void fold(int n) {
-    int c, i, letter;
+    int c, i, j, letter;
     char line[DEFAULT];
 
+    c = 0;
     while ((c = getchar()) != EOF) {
-        // DEFAULT - 1 to have room for null terminator
-        for (i = 0; i < DEFAULT - 1 || c == '\n'; ++i) {
-            line[i] = c;
-            c = getchar();
+        line[i] = c;
+        ++i;
+
+        if (i == DEFAULT || c == '\n') {
+            letter = 0;
+            while (letter)
+                if (line[i] != ' ' && line[i] != '\t')
+                    letter = 1;
+                else if (i == 0)
+                    letter = 1;
+                else
+                    --i;
+            for (j = 0; j < i; ++j) {
+                putchar(line[j]);
+            }
+            printf("\n");
+            i = 0;
         }
-        line[i] = '\0';
-        letter = 0;
-        for (i; i >= 0; --i) {
-            if (line[i] != ' ' || line[i] != '\t')
-                letter = 1;
-            if ((line[i] == ' ' && letter == 0) || (line[i] == '\t' &&
-            letter == 0))
-                line[i] = '\0';
-        }
-        for (i = 0; line[i] != '\0'; ++i)
-            putchar(line[i]);
-        printf("\n");
     }
 }
