@@ -1,7 +1,7 @@
 #include <stdio.h>
 #define MAXLINE 1000 // Maximum input line size
 
-int getline(char line[]);
+int getline(char line[], int lim);
 void copy(char to[], char from[]);
 // Part of exercise 1-17
 void printLong80();
@@ -18,14 +18,15 @@ int main() {
     char longest[MAXLINE]; // Longest line saved here
 
     max = 0;
-    while ((len = getline(line)) > 0)
-        reverse(line);
+    while ((len = getline(line, MAXLINE)) > 0) {
         if (len > max) {
             max = len;
             copy(longest, line);
         }
-    if (max > 0) // There was a line
-        printf("%s", longest);
+        printf("Current line length: %d\n", len);
+        if (max > 0) // There was a line
+            printf("%s\n", longest);
+    }
     return 0;
 }
 
@@ -36,19 +37,14 @@ int main() {
  * will print the length of arbitrarily long input lines, and as much as
  * possible of the text.
 */
-int getline(char s[]) { // Removed limit, prints long lengths.
+int getline(char s[], int lim) {
     int c, i;
 
-    // Removed limits here as well
-    // TODO: Revisit this. Will encounter errors printing out longest line
-    // Find a way to keep counter accurate, don't worry about printing all
-    // the output
-    for (i = 0; (c = getchar()) != EOF && c != '\n'; ++i)
+    for (i = 0;(c = getchar()) != EOF && c != '\n'; ++i)
+        if (i < lim - 1)
+            s[i] = c;
+    if (c == '\n')
         s[i] = c;
-    if (c == '\n') {
-        s[i] = c;
-        ++i;
-    }
     s[i] = '\0';
     return i;
 }
