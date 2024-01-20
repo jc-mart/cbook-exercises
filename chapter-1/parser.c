@@ -8,6 +8,15 @@
 
 void removeComments();
 
+/**
+ * Exercise 1-24. Write a program to check a C program for rudimentary syntax
+ * errors like unbalanced parenthesis, brackets and braces. Don't forget about
+ * quotes, both single and double, escape sequences, and comments. (This
+ * program is hard if you do it in full generality)
+*/
+
+void checkProgram();
+
 int main() {
     removeComments();
 }
@@ -31,5 +40,15 @@ void removeComments() {
             quoted = 0;
 
         putchar(c);
+    }
+}
+
+void checkProgram() {
+    int c, bal, esc;
+
+    // 'esc' references anything in quotes or comments
+    bal = esc = 0;
+    while ((c = getchar()) != EOF) {
+
     }
 }
