@@ -18,7 +18,7 @@ void removeComments();
 void checkProgram();
 
 int main() {
-    removeComments();
+    checkProgram();
 }
 
 void removeComments() {
@@ -35,6 +35,8 @@ void removeComments() {
             if ((c = getchar()) == '/' && c != EOF)
                 while ((c = getchar()) != '\n' && c != EOF)
                     ;
+            else
+                putchar('/');
         
         if ((quoted == 1 && c == '\'') || (quoted == 1 && c == '"'))
             quoted = 0;
@@ -44,11 +46,55 @@ void removeComments() {
 }
 
 void checkProgram() {
-    int c, bal, esc;
+    int c, bal, sinEsc, dobEsc, comEsc;
 
     // 'esc' references anything in quotes or comments
-    bal = esc = 0;
+    bal = sinEsc = dobEsc = comEsc = 0;
     while ((c = getchar()) != EOF) {
-
+        // Double quotes
+        if (c == '"' && dobEsc == 0 && sinEsc == 0 && c != EOF) {
+            dobEsc = 1;
+            bal += 1;
+        } else if (c == '"' && dobEsc == 1 && sinEsc == 0 && c != EOF) {
+            dobEsc = 0;
+            bal -= 1;
+        }
+        // Single quotes
+        if (c == '\'' && dobEsc == 0 && sinEsc == 0 && c != EOF) {
+            sinEsc = 1;
+            bal += 1;
+        } else if (c == '\'' && dobEsc == 0 && sinEsc == 1 && c != EOF) {
+            sinEsc = 0;
+            bal -= 1;
+        }
+        // Braces
+        if (c == '{' && dobEsc == 0 && sinEsc == 0 && c != EOF) {
+            bal += 1;
+        } else if (c == '}' && dobEsc == 0 && sinEsc == 0 && c != EOF) {
+            bal -= 1;
+        }
+        // Brackets
+        if (c == '[' && dobEsc == 0 && sinEsc == 0 && c != EOF) {
+            bal += 1;
+        } else if (c == ']' && dobEsc == 0 && sinEsc == 0 && c != EOF) {
+            bal -= 1;
+        }
+        // Parentheses
+        if (c == '(' && dobEsc == 0 && sinEsc == 0 && c != EOF) {
+            bal += 1;
+        } else if (c == ')' && dobEsc == 0 && sinEsc == 0 && c != EOF) {
+            bal -= 1;
+        }
+        // In-line comment
+        if (c == '/' && sinEsc == 0 && dobEsc == 0)
+            if ((c = getchar()) == '/' && c != EOF)
+                while ((c = getchar()) != '\n' && c != EOF)
+                    ;
+            else
+                putchar('/');
+        
+        putchar(c);
+        if (bal != 0)
+            printf("\nProgram has missing braces, brackets, or parenthesis. %d\n", bal);
     }
 }
