@@ -69,9 +69,10 @@ void checkProgram() {
         }
         // Braces
         if ((c == '{' || c == '[' || c == '(') && dobEsc == 0 && sinEsc == 0 \
-            && c != EOF)
+        && c != EOF)
             bal += 1;
-        if ((c == '}' || c == ']' || c == ')') && dobEsc == 0 && sinEsc == 0 && c != EOF)
+        if ((c == '}' || c == ']' || c == ')') && dobEsc == 0 && sinEsc == 0 \
+        && c != EOF)
             bal -= 1;
         // In-line comment
         if (c == '/' && sinEsc == 0 && dobEsc == 0)
