@@ -49,7 +49,7 @@ void checkProgram() {
     int c, bal, sinEsc, dobEsc, comEsc;
 
     // 'esc' references anything in quotes or comments
-    bal = sinEsc = dobEsc = comEsc = 0;
+    bal = sinEsc = dobEsc = 0;
     while ((c = getchar()) != EOF) {
         // Double quotes
         if (c == '"' && dobEsc == 0 && sinEsc == 0 && c != EOF) {
@@ -68,23 +68,11 @@ void checkProgram() {
             bal -= 1;
         }
         // Braces
-        if (c == '{' && dobEsc == 0 && sinEsc == 0 && c != EOF) {
+        if ((c == '{' || c == '[' || c == '(') && dobEsc == 0 && sinEsc == 0 \
+            && c != EOF)
             bal += 1;
-        } else if (c == '}' && dobEsc == 0 && sinEsc == 0 && c != EOF) {
+        if ((c == '}' || c == ']' || c == ')') && dobEsc == 0 && sinEsc == 0 && c != EOF)
             bal -= 1;
-        }
-        // Brackets
-        if (c == '[' && dobEsc == 0 && sinEsc == 0 && c != EOF) {
-            bal += 1;
-        } else if (c == ']' && dobEsc == 0 && sinEsc == 0 && c != EOF) {
-            bal -= 1;
-        }
-        // Parentheses
-        if (c == '(' && dobEsc == 0 && sinEsc == 0 && c != EOF) {
-            bal += 1;
-        } else if (c == ')' && dobEsc == 0 && sinEsc == 0 && c != EOF) {
-            bal -= 1;
-        }
         // In-line comment
         if (c == '/' && sinEsc == 0 && dobEsc == 0)
             if ((c = getchar()) == '/' && c != EOF)
