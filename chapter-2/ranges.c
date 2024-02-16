@@ -2,8 +2,16 @@
 #include <limits.h>
 #include <float.h>
 
+/**
+ * Exercise 2-1.
+ * 
+ * Write a program to determine the ranges of char, short, int, and long
+ * variables, both signed and unsigned, by printing appropriate values from
+ * standard headers and by direct computation. Harder ifyou compute them:
+ * determine the ranges of the various floating-point types.
+*/
 int main() {
-    // Integer values
+    // Integer values, use %lli for Windows, %lu for macOS
     printf("\n   \
             CHAR:    max = %d, min = %d\n   \
             U_CHAR:  max = %d, min = %d\n   \
@@ -24,8 +32,12 @@ int main() {
 
     // Double values
     printf("\n   \
-            FLOAT:   max = %f, min = %f\n   \
-             ", FLT_MAX, FLT_MIN);
+            FLOAT:   max = %e, min = %e\n   \
+            DOUBLE:  max = %e, min = %e\n   \
+            L_DBL:   max = %e, min = %e\n   \
+             ", FLT_MAX, FLT_MIN,
+             DBL_MAX, DBL_MIN,
+             LDBL_MAX, LDBL_MIN);
 
     return 0;
 }
