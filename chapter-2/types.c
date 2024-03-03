@@ -1,9 +1,10 @@
 #include <stdio.h>
 #include <math.h>
 
-void expand();
+void expand(); // Not tested
 int htoi(char s[]);
 void squeeze(char s1[], char s2[]);
+int any(char s1[], char s2[]);
 
 int main() {
     printf("Result of htoi: %d\n", htoi("0X7cF")); // Decimal equivalent: 1999
@@ -13,7 +14,9 @@ int main() {
     char test[] = "dog";
     char eval[] = "cat";
     
+    // Comment out squeeze to test any, as squeeze modifies string
     squeeze(test, eval);
+    printf("Result of any: %d\n", any(test, eval));
 }
 
 /**
@@ -75,10 +78,13 @@ int htoi(char s[]) {
 }
 
 /**
+ * Exercise 2-4.
+ * 
  * Write an alternate version of `squeeze(s1, s2)` that deletes each character
  * in `s1` that matches any character in the string `s2`.
 */
 void squeeze(char s1[], char s2[]) {
+    // s1 array indexer, moves if no match was made, s2 array indexer, flag
     int i, j, k, l;
 
     for (i = j = 0; s1[i] != '\0'; i++) {
@@ -98,4 +104,25 @@ void squeeze(char s1[], char s2[]) {
     s1[j] = '\0';
     // Print results
     printf("%s\n", s1);
+}
+
+/**
+ * Exercise 2-5.
+ * 
+ * Write the function `any(s1, s2)`, which returns the first location in the
+ * string s1 where any character from the string s2 occurs, or -1 if `s1`
+ * contains no characters from `s2`. (The standard library function `strpbrk`
+ * does the same job but returns a pointer to the location.)
+*/
+int any(char s1[], char s2[]) {
+    // Two array indexers, result
+    int i, j, r;
+    r = -1;
+
+    for (i = 0; s1[i] != '\0'; i++)
+        for (j = 0; s2[j] != '\0'; j++) 
+            if (s1[i] == s2[j] && (r == -1 || i < r)) 
+                r = i;
+
+    return r;
 }
