@@ -4,3 +4,6 @@
 # Executable
 *.exe
 *.out
+
+# macOS
+*.DS_Store
