@@ -2,6 +2,7 @@
 
 unsigned getbits(unsigned x, int p, int n);
 unsigned setbits(unsigned x, int p, int n, unsigned y);
+unsigned invert(unsigned x, int p, int n);
 
 int main() {
     unsigned int test = 15;
@@ -20,6 +21,12 @@ int main() {
     unsigned int new_result = setbits(alpha, 2, 2, bravo);
 
     printf("Actual result of %u when expecting %u.\n", new_result, expected);
+
+    unsigned int invert_alpha = 0b1111;
+    unsigned int invert_expected = 0b1110;
+    unsigned int invert_result = invert(alpha, 1, 1);
+
+    printf("Actual result of %u when expecting %u.\n", invert_result, invert_expected);
 }
 
 unsigned getbits(unsigned x, int p, int n) {
@@ -48,4 +55,22 @@ unsigned setbits(unsigned x, int p, int n, unsigned y) {
     x = ~bitmask & x;
     // Bitwise `|` to get result
     return x | extracted;
+}
+
+
+/**
+ * Exercise 2-7.
+ * 
+ * Write a function `invert(x,p,n)` that returns `x` with the `n` bits that
+ * begin at position `p` inverted (i.e., 1 changed to 0 and vice versa),
+ * leaving the other bits unchanged.
+ */
+unsigned invert(unsigned x, int p, int n) {
+    // Create bitmask
+    // unsigned bitmask = ~(~0 << n);
+    // Shift bitmask over p positions to the left
+    // bitmask = bitmask << p - 1;
+    // XOR to invert the desired bits and return
+    // return x ^ bitmask;
+    return x ^ (~(~0 << n) << p - 1);
 }
