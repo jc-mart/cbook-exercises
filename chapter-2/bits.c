@@ -4,6 +4,8 @@ unsigned getbits(unsigned x, int p, int n);
 unsigned setbits(unsigned x, int p, int n, unsigned y);
 unsigned invert(unsigned x, int p, int n);
 unsigned rightrot(unsigned x, int n);
+int bitcount(unsigned x);
+int bitcount_faster(unsigned x);
 
 int main() {
     // GETBITS example
@@ -39,6 +41,17 @@ int main() {
     unsigned int rightrot_result = rightrot(righrot_alpha, 2);
 
     printf("[RIGHTROT] Actual result of %u when expecting %u.\n", rightrot_result, rightrot_expected);
+
+    //BITCOUNT exercise
+    unsigned int bitcount_alpha = 0b1101;
+    int bitcount_expected = 3;
+    int bitcount_result = bitcount(bitcount_alpha);
+
+    unsigned int bitcount_faster_alpha = 0b1101;
+    int bitcount_faster_expected = 4;
+    int bitcount_faster_result = bitcount_faster(bitcount_alpha);
+
+    printf("Expecting %d. From bitcount: %d. From bitcount faster: %d.\n", bitcount_expected, bitcount_result, bitcount_faster_result);
 }
 
 unsigned getbits(unsigned x, int p, int n) {
@@ -116,4 +129,35 @@ unsigned rightrot(unsigned x, int n) {
     return extracted | x;
     */
     return ((~(~0 << n) & x) << bit_length) | (x >> n);
+}
+
+/**
+ * Exercise 2-9.
+ * 
+ * In a two's complement number system, `x &= (x-1)` deletes the rightmost
+ * 1-bit in `x`. Explain why. Use this observation to write a faster version of
+ * `bitcount`.
+ * 
+ * EXPLANATION: Starting with 1111 as an example
+ * 1111 &= (1111 - 1) -> 1111 &= 1110 -> 1110
+ * 1110 &= (1110 - 1) -> 1110 &= 1101 -> 1100
+ * 1100 &= (1100 - 1) -> 1100 &= 1011 -> 1000
+ */
+int bitcount(unsigned x) {
+    int b;
+
+    for (b = 0; x != 0; x >>= 1)
+        if (x & 01)
+            b++;
+
+    return b;
+}
+
+int bitcount_faster(unsigned x) {
+    int b;
+
+    for (b = 0; x > 0; x &= (x - 1), b++)
+        ;
+    
+    return b;
 }
