@@ -1,10 +1,17 @@
 #include <stdio.h>
 #include <math.h>
 
+// Exercise 2-2
 void expand(); // Not tested
+// Exercise 2-3
 int htoi(char s[]);
+// Exercise 2-4
 void squeeze(char s1[], char s2[]);
+// Exercise 2-5
 int any(char s1[], char s2[]);
+// Exercise 2-10
+int lower(int c);
+int lower_conditional(int c);
 
 int main() {
     printf("Result of htoi: %d\n", htoi("0X7cF")); // Decimal equivalent: 1999
@@ -125,4 +132,21 @@ int any(char s1[], char s2[]) {
                 r = i;
 
     return r;
+}
+
+/** 
+ * Exercise 2-10.
+ * 
+ * Rewrite the function `lower`, which converts uppercase letters to lower
+ * case, with a conditional expression instead of `if-else`.
+*/
+int lower(int c) {
+    if (c >= 'A' && c <= 'Z')
+        return c + 'a' - 'A';
+    else
+        return c;
+}
+
+int lower_conditional(int c) {
+    return (c >= 'A' && c <= 'Z') ? c + 'a' - 'A': c;
 }

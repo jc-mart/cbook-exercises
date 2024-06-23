@@ -1,9 +1,13 @@
 #include <stdio.h>
 
 unsigned getbits(unsigned x, int p, int n);
+// Exercise 2-6
 unsigned setbits(unsigned x, int p, int n, unsigned y);
+// Exercise 2-7
 unsigned invert(unsigned x, int p, int n);
+// Exercise 2-8
 unsigned rightrot(unsigned x, int n);
+// Exercise 2-9
 int bitcount(unsigned x);
 int bitcount_faster(unsigned x);
 
