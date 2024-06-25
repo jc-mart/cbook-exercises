@@ -8,11 +8,19 @@ void escape(char s[], char t[]);
 void escape_reverse(char s[], char t[]);
 
 int main() {
+    // Exercise 3-1
     int sorted[] = {1, 2, 3, 4, 5, 6, 7};
     int expecting = 5;
     int result = binsearch_modified(expecting, sorted, 7);
 
     printf("Expecting %d and got %d.\n", expecting, result);
+
+    // Exercise 3-2
+    char src[] = "\tThis is a test.\n";
+    char dest[] = "                     ";
+    escape(dest, src);
+
+    printf("\nInput:\n%s\nOutput:\n%s\n", src, dest);
 }
 
 /**
@@ -61,12 +69,56 @@ int binsearch_modified(int x, int v[], int n) {
     return -1;
 }
 
+/**
+ * Exercise 3-2.
+ * 
+ * Write a function `escape(s,t)` that converts characters like newline and tab
+ * into visible escape sequences like `\n` and `\t` as it copies the string `t`
+ * to `s`. Use a switch. Write a function for the other direction as well,
+ * converting escape sequences into the real characters.
+ */
 void escape(char s[], char t[]) {
+    int i, j;
 
-    return 0;
+    for (i, j = 0; t[i] != '\0'; i++, j++) {        
+        switch(t[i]) {
+            case '\n':
+                s[j++] = '\\';
+                s[j] = 'n';
+                break;
+            case '\r':
+                s[j++] = '\\';
+                s[j] = 'r';
+                break;
+            case '\t':
+                s[j++] = '\\';
+                s[j] = 't';
+                break;
+            case '\\':
+                s[j++] = '\\';
+                s[j] = '\\';
+                break;
+            case '\'':
+                s[j++] = '\\';
+                s[j] = '\'';
+                break;
+            case '\"':
+                s[j++] = '\\';
+                s[j] = '\"';
+                break;
+            case '\?':
+                s[j++] = '\\';
+                s[j] = '\?';
+                break;
+            default:
+                s[j] = t[i];
+                break;
+        }
+
+        s[j + 1] = '\0';
+    }
 }
 
 void escape_reverse(char s[], char t[]) {
 
-    return 0;
 }
