@@ -5,7 +5,7 @@ int binsearch(int x, int v[], int n);
 int binsearch_modified(int x, int v[], int n);
 // Exercise 3-2
 void escape(char s[], char t[]);
-void escape_reverse(char s[], char t[]);
+void unescape(char s[], char t[]);
 
 int main() {
     // Exercise 3-1
@@ -80,7 +80,7 @@ int binsearch_modified(int x, int v[], int n) {
 void escape(char s[], char t[]) {
     int i, j;
 
-    for (i, j = 0; t[i] != '\0'; i++, j++) {        
+    for (i = 0, j = 0; t[i] != '\0'; i++, j++) {        
         switch(t[i]) {
             case '\n':
                 s[j++] = '\\';
@@ -119,6 +119,6 @@ void escape(char s[], char t[]) {
     }
 }
 
-void escape_reverse(char s[], char t[]) {
+void unescape(char s[], char t[]) {
 
 }
