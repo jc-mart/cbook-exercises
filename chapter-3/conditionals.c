@@ -16,11 +16,17 @@ int main() {
     printf("Expecting %d and got %d.\n", expecting, result);
 
     // Exercise 3-2
-    char src[] = "\tThis is a test.\n";
-    char dest[] = "                     ";
-    escape(dest, src);
+    char escape_src[] = "\tThis is a test.\nOh!";
+    char escape_dest[] = "                       ";
+    escape(escape_dest, escape_src);
 
-    printf("\nInput:\n%s\nOutput:\n%s\n", src, dest);
+    printf("\nInput:\n%s\nOutput:\n%s\n", escape_src, escape_dest);
+
+    char unescape_src[] = "\\tThis is a test.\\nOh!";
+    char unescape_dest[] = "                       ";
+    unescape(unescape_dest, unescape_src);
+
+    printf("\nInput:\n%s\nOutput:\n%s\n", unescape_src, unescape_dest);
 }
 
 /**
@@ -120,5 +126,46 @@ void escape(char s[], char t[]) {
 }
 
 void unescape(char s[], char t[]) {
+    int i, curr, next;
 
+    for (i = 0, curr = 0, next = 1; t[next] != '\0'; i++, curr++, next++) {
+        printf("%c", t[curr]);
+
+        if (t[curr] == '\\') {
+            switch(t[next]) {
+                case 'n':
+                    s[i] = '\n';
+                    curr++, next++;
+                    break;
+                case 'r':
+                    s[i] = '\r';
+                    curr++, next++;
+                    break;
+                case 't':
+                    s[i] = '\t';
+                    curr++, next++;
+                    break;
+                case '\\':
+                    s[i] = '\\';
+                    curr++, next++;
+                    break;
+                case '\'':
+                    s[i] = '\'';
+                    curr++, next++;
+                    break;
+                case '\"':
+                    s[i] = '\"';
+                    curr++, next++;
+                    break;
+                case '\?':
+                    s[i] = '\?';
+                    curr++, next++;
+                    break;
+            }
+        } else
+            s[i] = t[curr];
+    }
+
+    s[i] = t[curr];
+    s[i + 1] = '\0';
 }
