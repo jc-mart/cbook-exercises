@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <string.h>
 
 // Exercise 3-1
 int binsearch(int x, int v[], int n);
@@ -6,6 +7,8 @@ int binsearch_modified(int x, int v[], int n);
 // Exercise 3-2
 void escape(char s[], char t[]);
 void unescape(char s[], char t[]);
+// Exercise 3-3
+void expand(char s1[], char s2[]);
 
 int main() {
     // Exercise 3-1
@@ -168,4 +171,40 @@ void unescape(char s[], char t[]) {
 
     s[i] = t[curr];
     s[i + 1] = '\0';
+}
+
+void expand(char s1[], char s2[]) {
+    int i, total;
+    char leading_dash, leading_char, trailing_char, \
+        leading_int, trailing_int;
+    leading_dash = leading_char = trailing_char = \
+        leading_int = trailing_int = 0;
+
+    // Process input string for what characters to output
+    for (i = 0; i < strlen(s1); i++) {
+        // Letters
+        if (s1[i] >= 'A' && s1[i] <= 'z') {
+            if (leading_char == -1)
+                leading_char = s1[i];
+            else
+                trailing_char = s1[i];
+        // Numbers
+        } else if (s1[i] >= '0' && s1[i] <= '9') {
+            if (leading_int == -1)
+                leading_int = s1[i];
+            else
+                trailing_char = s1[i];
+        // Leading dash
+        } else if(s1[i] == '-' && i == 0)
+            leading_dash = '-';
+    }
+
+    // s2's potential length
+    total = trailing_char - leading_char + trailing_int - leading_int;
+
+    if (leading_dash) {
+        // Fill out backward logic
+    } else {
+        // Fill out forward logic
+    }
 }
