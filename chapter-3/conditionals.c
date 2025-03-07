@@ -30,6 +30,13 @@ int main() {
     unescape(unescape_dest, unescape_src);
 
     printf("\nInput:\n%s\nOutput:\n%s\n", unescape_src, unescape_dest);
+
+	char expand_src[] = "A-c0-1"; // 29 chars, 2 nums
+	char expand_dest[29 + 2] = "";
+	expand(expand_dest, expand_src);
+
+	printf("Finish me!");
+
 }
 
 /**
@@ -184,18 +191,18 @@ void expand(char s1[], char s2[]) {
     for (i = 0; i < strlen(s1); i++) {
         // Letters
         if (s1[i] >= 'A' && s1[i] <= 'z') {
-            if (leading_char == -1)
+            if (!leading_char)
                 leading_char = s1[i];
             else
                 trailing_char = s1[i];
         // Numbers
         } else if (s1[i] >= '0' && s1[i] <= '9') {
-            if (leading_int == -1)
+            if (!leading_int)
                 leading_int = s1[i];
             else
                 trailing_char = s1[i];
         // Leading dash
-        } else if(s1[i] == '-' && i == 0)
+        } else if (s1[i] == '-' && i == 0)
             leading_dash = '-';
     }
 
@@ -204,7 +211,32 @@ void expand(char s1[], char s2[]) {
 
     if (leading_dash) {
         // Fill out backward logic
+		i = total;
+		while (i > 0) {
+			for (int j = trailing_int; j > leading_int; j--, i--)
+				putchar(j);
+
+			for (int j = trailing_char; j > leading_char; j--, i--) {
+				if (96 >= j >= 91)
+					continue;
+				
+				putchar(j);
+			}
+		}
     } else {
         // Fill out forward logic
+		i = 0;
+		while (i < total) {
+			for (int j = leading_int; j < trailing_int; j++, i++)
+				putchar(j);
+
+			for (int j = leading_char; j < trailing_char; j++, i++) {
+				if (91 <= j <= 96)
+					continue;
+
+				putchar(j);
+			}
+		}
     }
+	putchar('\n');
 }
