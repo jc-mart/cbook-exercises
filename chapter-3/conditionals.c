@@ -31,11 +31,11 @@ int main() {
 
     printf("\nInput:\n%s\nOutput:\n%s\n", unescape_src, unescape_dest);
 
-	char expand_src[] = "A-c0-1"; // 29 chars, 2 nums
+	char expand_src[] = "-A-c0-1"; // 29 chars, 2 nums
 	char expand_dest[29 + 2] = "";
-	expand(expand_dest, expand_src);
+	expand(expand_src, expand_dest);
 
-	printf("Finish me!");
+	printf("\nInput:\n%s\nOutput:\n%s\n", expand_src, expand_dest);
 
 }
 
@@ -182,10 +182,8 @@ void unescape(char s[], char t[]) {
 
 void expand(char s1[], char s2[]) {
     int i, total;
-    char leading_dash, leading_char, trailing_char, \
-        leading_int, trailing_int;
-    leading_dash = leading_char = trailing_char = \
-        leading_int = trailing_int = 0;
+    char leading_dash = 0, leading_char = 0, trailing_char = 0, \
+        leading_int = 0, trailing_int = 0;
 
     // Process input string for what characters to output
     for (i = 0; i < strlen(s1); i++) {
@@ -200,42 +198,43 @@ void expand(char s1[], char s2[]) {
             if (!leading_int)
                 leading_int = s1[i];
             else
-                trailing_char = s1[i];
+                trailing_int = s1[i];
         // Leading dash
         } else if (s1[i] == '-' && i == 0)
             leading_dash = '-';
     }
 
     // s2's potential length
-    total = trailing_char - leading_char + trailing_int - leading_int;
+    total = trailing_char - leading_char + trailing_int - leading_int;	
+	int k = 0;
 
     if (leading_dash) {
         // Fill out backward logic
 		i = total;
 		while (i > 0) {
-			for (int j = trailing_int; j > leading_int; j--, i--)
-				putchar(j);
+			for (int j = trailing_int; j >= leading_int; j--, i--)
+				s2[k++] = j;
 
-			for (int j = trailing_char; j > leading_char; j--, i--) {
-				if (96 >= j >= 91)
+			for (int j = trailing_char; j >= leading_char; j--, i--) {
+				if (96 >= j && j >= 91)
 					continue;
 				
-				putchar(j);
+				s2[k++] = j;;
 			}
 		}
     } else {
         // Fill out forward logic
 		i = 0;
 		while (i < total) {
-			for (int j = leading_int; j < trailing_int; j++, i++)
-				putchar(j);
-
-			for (int j = leading_char; j < trailing_char; j++, i++) {
-				if (91 <= j <= 96)
+			for (int j = leading_char; j <= trailing_char; j++, i++) {
+				if (91 <= j && j <= 96)
 					continue;
 
-				putchar(j);
+				s2[k++] = j;
 			}
+
+			for (int j = leading_int; j <= trailing_int; j++, i++)
+				s2[k++] = j;
 		}
     }
 	putchar('\n');
