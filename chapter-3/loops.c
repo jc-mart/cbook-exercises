@@ -1,11 +1,19 @@
 #include <stdio.h>
 #include <string.h>
+#include <limits.h>
+#include <stdlib.h>
 
 // Exercise 3-4
 void itoa(int n, char s[]);
+void reverse(char* s);
+// Exercise 3-5
+void itob(int n, char s[], int b);
 
 int main() {
+	char dest[50] = "";
 
+	itoa(INT_MIN, dest);
+	printf("Min is %d, string is %s\n", INT_MIN, dest);
 }
 
 
@@ -24,17 +32,44 @@ int main() {
 void itoa(int n, char s[]) {
 	int i, sign;
 
-	if ((sign = n) < 0)
-		n = -n;
+	if (n < 0)
+		sign = 1;
 	
 	i = 0;
 	do {
-		s[i++] = n % 10 + '0';
-	} while((n /= 10) > 0);
+		if (sign)
+			s[i++] = abs(abs(n) % 10) + '0';
+		else
+			s[i++] = n % 10 + '0';
+	} while((abs(n /= 10)) > 0);
 	
-	if (sign < 0)
+	if (sign)
 		s[i++] = '-';
 	
 	s[i] = '\0';
 	reverse(s);
+}
+
+void itob(int n, char s[], int b) {
+	
+}
+
+void reverse(char* s) {
+	// Initialize l and r pointers
+    int l = 0;
+    int r = strlen(s) - 1;
+    char t;
+
+    // Swap characters till l and r meet
+    while (l < r) {
+      
+        // Swap characters
+        t = s[l];
+        s[l] = s[r];
+        s[r] = t;
+
+        // Move pointers towards each other
+        l++;
+        r--;
+    }
 }
